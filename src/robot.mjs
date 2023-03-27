@@ -289,6 +289,7 @@ class Robot extends EventEmitter {
       }catch(err){
         this.emit(Robot.EVENTS.ERROR, err, message)
       }
+
       if(anyListenersExecuted && message.done) {
         break
       }

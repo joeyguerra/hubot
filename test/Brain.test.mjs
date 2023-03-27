@@ -1,7 +1,6 @@
 'use strict'
 
 import {Brain, User} from '../index.mjs'
-import assert from 'node:assert/strict'
 import {describe, test, expect} from 'bun:test'
 
 const mockRobot = {

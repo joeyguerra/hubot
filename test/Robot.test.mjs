@@ -1,5 +1,4 @@
 'use strict'
-import assert from 'node:assert/strict'
 import {describe, expect, test, beforeEach, afterEach} from 'bun:test'
 import { Robot, TextListener, CatchAllMessage, User, EnterMessage, LeaveMessage, TextMessage, TopicMessage } from '../index.mjs'
 import {URL} from 'node:url'
@@ -72,7 +71,6 @@ describe('Robot', async () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'name=jg'
       })
-      console.log('response.status', response.status)
       expect(response.status).toEqual(200)
       expect((await response.json()).name).toEqual('jg')
     })
@@ -482,11 +480,15 @@ describe('Robot', async () => {
     })
 
     await test('can block listener callback execution', async () => {
-      const listenerCallback = ()=>assert.fail('Should not be called')
-      robot.hear(/^message123$/, ()=>{})
-      robot.listenerMiddleware(context => {
-        context.response.message.done = true
-        expect(context.response.message.done).toEqual(true)
+      const listenerCallback = async ()=>{
+        console.error('Should not be called')
+        expect(true).toEqual(false)
+      }
+      robot.hear(/^message123$/, listenerCallback)
+      robot.listenerMiddleware((robot, response) => {
+        response.message.done = true
+        expect(response.message.done).toEqual(true)
+        return true
       })
       const testMessage = new TextMessage(new User(1), 'message123')
       await robot.receive(testMessage)

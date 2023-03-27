@@ -1,7 +1,6 @@
 'use strict'
 
 import { TextMessage, Robot, Response, Middleware, User} from '../index.mjs'
-import assert from 'node:assert/strict'
 import {describe, test, expect} from 'bun:test'
 
 function makeDummyResponse(){
@@ -13,11 +12,11 @@ describe('Middleware', () => {
     describe('#execute', () => {
       test('executes synchronous middleware', async ()=>{
         const testMiddleware = (robot, response) => {
-          assert.ok(response)
+          expect(response).toBeTruthy()
           return true
         }
         const middlewareFinished = (robot, response) => {
-          assert.ok(response)
+          expect(response).toBeTruthy()
           return true
         }
         const middleware = new Middleware(new Robot())
@@ -28,11 +27,11 @@ describe('Middleware', () => {
 
       test('executes asynchronous middleware', async ()=> {
         const testMiddleware = async (robot, response) => {
-          assert.ok(response)
+          expect(response).toBeTruthy()
           return true
         }
         const middlewareFinished = async (robot, response) => {
-          assert.ok(response)
+          expect(response).toBeTruthy()
           return true
         }
         const middleware = new Middleware(new Robot())
@@ -80,7 +79,8 @@ describe('Middleware', () => {
           const middleware = new Middleware(new Robot())
           
           const middlewareFinished = ()=>{
-            assert.fail('Should not be called')
+            console.error('Should not be called')
+            expect(true).toEqual(false)
           }
 
           middleware.register(testMiddlewareA)

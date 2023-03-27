@@ -1,7 +1,6 @@
 'use strict'
 
 import { EnterMessage, TextMessage, Listener, TextListener, Response, User, Robot } from '../index.mjs'
-import assert from 'node:assert/strict'
 import {test, describe, expect} from 'bun:test'
 
 const makeRobot = ()=>{
@@ -230,7 +229,6 @@ await describe('Listener', async ()=> {
           const testMessage = new EnterMessage(user)
           testMessage.match = regex => {
             expect(true).toEqual(false)
-            assert.fail('Should not be called')
           }
           const testRegex = /test/
           const testListener = new TextListener(robot, testRegex, callback)
