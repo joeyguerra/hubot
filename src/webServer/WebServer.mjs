@@ -1,3 +1,5 @@
+import TemplateResponse from './TemplateResponse.mjs'
+
 const log = (...args) => console.log(new Date(), ...args)
 
 class Handler {
@@ -102,6 +104,15 @@ export default {
    },
    use(regex, handler){
       filters.add(new UseHandler(regex, handler))
+   },
+   async render(file, options){
+      let layout = options?.layout ?? null
+      let layoutHtml = '${content}'
+      if(layout){
+         layoutHtml = await Bun.file(layout).text()
+      }
+      const template = new TemplateResponse(layoutHtml, await Bun.file(file).text())
+      return template.render(options?.model ?? {})
    },
    async fetch(req, server){
       const url = new URL(req.url)

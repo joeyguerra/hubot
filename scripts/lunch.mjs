@@ -44,7 +44,8 @@ const randomFrom = options => options[Math.floor(Math.random() * options.length)
 export default robot => {
   robot.router.get(/lunch/, (req, res) => {
     const selectedLunch = randomFrom(dallasLunchOptions)
-    res.send(`${selectedLunch}`)
+
+    return robot.router.render('./scripts/www/lunch.html', {model: {selectedLunch, title: 'Lunch'}, layout: './scripts/www/layout.html'})
   })
   robot.respond(/lunch$/i, resp => {
     const selectedLunch = randomFrom(dallasLunchOptions)

@@ -9,7 +9,7 @@ class TemplateResponse {
     render(model){
         let html = ''
         if(this.layout){
-            html = TemplateResponse.compile(this.layout)({content: TemplateResponse.compile(this.template)(model)})
+            html = TemplateResponse.compile(this.layout)({content: TemplateResponse.compile(this.template)(model), ...model})
         } else {
             html = TemplateResponse.compile(this.template)(model)
         }
