@@ -11,7 +11,8 @@ const switches = [
   ['-l', '--alias ALIAS', "Enable replacing the robot's name with alias"],
   ['-n', '--name NAME', 'The name of the robot in chat'],
   ['-r', '--require PATH', 'Alternative scripts path'],
-  ['-p', '--public PUBLIC', 'The path to the public directory'],
+  ['-w', '--www WWW', 'The path to the www directory'],
+  ['-p', '--port PORT', 'The port to listen on'],
   ['-t', '--config-check', "Test hubot's config to make sure it won't fail at startup"],
   ['-v', '--version', 'Displays the version of hubot installed'],
   ['-c', '--cert CERT', 'Path to SSL certificate'],
@@ -62,8 +63,8 @@ Parser.on('name', (opt, value) => {
 Parser.on('require', (opt, value) => {
   options.scripts.push(value)
 })
-Parser.on('public', (opt, value) => {
-  options.public = value
+Parser.on('www', (opt, value) => {
+  options.www = value
 })
 
 Parser.on('config-check', opt => {
@@ -72,6 +73,10 @@ Parser.on('config-check', opt => {
 
 Parser.on('version', (opt, value) => {
   options.version = true
+})
+
+Parser.on('port', (opt, value) => {
+  options.port = value
 })
 
 Parser.on((opt, value) => {

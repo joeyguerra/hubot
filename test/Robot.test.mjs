@@ -20,7 +20,7 @@ describe('Robot', async () => {
 
   beforeEach(async () => {
     robot = new Robot('../test/fixtures/shell.mjs', 'TestHubot', 'Hubot')
-    await robot.setupExpress(0)
+    await robot.setupWebServer(0)
     try{
       await robot.loadAdapter('../test/fixtures/shell.mjs')
       robot.run()

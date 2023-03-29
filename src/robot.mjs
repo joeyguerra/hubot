@@ -29,7 +29,7 @@ class Robot extends EventEmitter {
     if (name == null) {
       name = 'Hubot'
     }
-    this.port = 0
+    this.port = options?.port ?? 8080
     this.options = options
     this.cert = options?.cert
     this.key = options?.key
@@ -396,7 +396,7 @@ class Robot extends EventEmitter {
   async setupWebServer (port) {
     const user = process.env.EXPRESS_USER
     const pass = process.env.EXPRESS_PASSWORD
-    this.port = port ?? 8080
+    this.port = port ?? this.port
     const limit = process.env.EXPRESS_LIMIT || '100kb'
     const paramLimit = parseInt(process.env.EXPRESS_PARAMETER_LIMIT) || 1000
     this.server = webServer
