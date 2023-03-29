@@ -27,6 +27,7 @@ jobs:
         bun-version: ">=0.5"
         cache: true
         cache-bin: true
-    - name: Run Script
+    - name: Install
       run: bun install
+    - name: Test
       run: bun test
