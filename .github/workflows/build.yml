@@ -21,11 +21,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - name: Setup Bun Runtime
+      uses: antongolub/action-setup-bun@v1
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        bun-version: ">=0.5"
+        cache: true
+        cache-bin: true
+    - name: Run Script
+    - run: bun install
+    - run: bun test
