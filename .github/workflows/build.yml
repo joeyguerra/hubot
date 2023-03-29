@@ -28,5 +28,5 @@ jobs:
         cache: true
         cache-bin: true
     - name: Run Script
-    - run: bun install
-    - run: bun test
+      run: bun install
+      run: bun test
