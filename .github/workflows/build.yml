@@ -13,8 +13,6 @@ jobs:
       uses: oven-sh/setup-bun@v1
       with:
         bun-version: ">=0.5"
-        cache: true
-        cache-bin: true
     - name: Installation
       run: bun install
     - name: Test
