@@ -117,7 +117,7 @@ export default {
    async fetch(req, server){
       const url = new URL(req.url)
       const cookies = req.headers.get('cookie')?.split(/;\s?/).map(c => c.split('=').reduce((a, b) => {return {[a]: b ?? null}}))
-      const sessionId = cookies.find(c => c.SessionId)?.SessionId ?? null
+      let sessionId = cookies.find(c => c.SessionId)?.SessionId ?? null
       const requestUrl = new URL(req.url)
 
       if(!sessionId && req.headers.get('connection') == 'Upgrade'){
@@ -162,15 +162,19 @@ export default {
    },
    websocket: {
       open(socket){
-         socket.subscribe('room')
-         socket.publish('room', `${socket.data.sessionId} joined the room`)
+         socket.subscribe('disconnect')
+         socket.subscribe('connected')
+         socket.subscribe('message')
+         socket.publish('connected', `${socket.data.sessionId} joined the room`)
       },
       message(socket, message){
-         socket.publish('room', `${socket.data.sessionId}: ${message}`)
+         socket.publish('message', `${socket.data.sessionId}: ${message}`)
       },
       close(socket){
-         socket.unsubscribe('room')
-         socket.publish('room', `${socket.data.sessionId} left the room`)
+         socket.unsubscribe('disconnect')
+         socket.unsubscribe('connected')
+         socket.unsubscribe('message')
+         socket.publish('disconnect', `${socket.data.sessionId} left the room`)
       },
       drain(socket){
 
